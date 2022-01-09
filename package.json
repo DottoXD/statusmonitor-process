@@ -1,7 +1,7 @@
 {
     "name": "@statusmonitor/process",
     "decription": "A free status monitor solution, used to monitor a nodejs process' resources usage.",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "scripts": {
         "start": "node index.js"
     },
