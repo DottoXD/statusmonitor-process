@@ -19,7 +19,7 @@ You can easily setup [statusmonitor-server](https://github.com/DottoXD/statusmon
 
 **Step one: install the package!**
 ```
-npm i @statusmonitor/process
+npm i @dottoxd/statusmonitor-process
 ```
 
 **Step two: configure your project!**
