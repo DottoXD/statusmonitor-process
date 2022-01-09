@@ -1,0 +1,22 @@
+{
+    "name": "@statusmonitor/process",
+    "decription": "A free status monitor solution, used to monitor a nodejs process' resources usage.",
+    "version": "0.0.1",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DottoXD/statusmonitor-process.git"
+    },
+    "author": "DottoXD",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/DottoXD/statusmonitor-process/isssues"
+    },
+    "dependencies": {
+        "fastify": "^3.25.3",
+        "pidusage": "^3.0.0",
+        "systeminformation": "^5.9.17"
+    }
+}
