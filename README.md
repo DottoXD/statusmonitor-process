@@ -25,7 +25,7 @@ npm i @dottoxd/statusmonitor-process
 **Step two: configure your project!**
 *just 3 lines of code are needed for this to work!*
 ```
-const StatusMonitor = require("@statusmonitor/process")
+const StatusMonitor = require("@dottoxd/statusmonitor-process")
 const Monitor = new StatusMonitor.Process("Your application name", "DOCKER", "US", 3000);
 const ProcessMonitor = Monitor.statsFetcher();
 ```
