@@ -24,6 +24,8 @@ class StatusMonitor {
       let diskTotal;
       let netIn;
       let netOut;
+      let netInSec;
+      let netOutSec;
       
       fastify.get('/', async (request, reply) => {
           function convertSeconds(seconds) {
@@ -51,6 +53,8 @@ class StatusMonitor {
           await si.fsSize().then((driveInfo) => (diskUsage = driveInfo[0].used * Math.pow(1024, -2)));
           await si.networkStats().then((networkStats) => (netIn = networkStats[0].rx_bytes));
           await si.networkStats().then((networkStats) => (netOut = networkStats[0].tx_bytes));
+          await si.networkStats().then((networkStats) => (netInSec = networkStats[0].rx_sec));
+          await si.networkStats().then((networkStats) => (netOutSec = networkStats[0].tx_sec));
           
           
           await reply.send({
@@ -68,7 +72,9 @@ class StatusMonitor {
               swap_total: 0,
               swap_used: 0,
               network_rx: netIn,
+              network_rx_sec: netInSec,
               network_tx: netOut,
+              network_tx_sec: netOutSec,
               uptime: fixedUptime,
               custom: "",
               load: 0
