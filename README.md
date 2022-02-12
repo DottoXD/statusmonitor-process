@@ -5,8 +5,8 @@ You can selfhost a [statusmonitor-server](https://github.com/DottoXD/statusmonit
 # important note
 This project runs with [fastify](https://npmjs.com/package/fastify), [pidusage](https://npmjs.com/package/pidusage) and [systeminformation](https://npmjs.com/package/systeminformation)
 
-# update 0.0.3
-+ adding per second network usage
+# update 0.0.4
++ aadding support to existing fastify instances
 
 # features
 Every feature available in [statusmonitor-client](https://github.com/DottoXD/statusmonitor-client) is available there too!
@@ -24,8 +24,17 @@ npm i @dottoxd/statusmonitor-process
 
 **Step two: configure your project!**
 *just 3 lines of code are needed for this to work!*
+
+Running with a new fastify instance:
 ```
 const StatusMonitor = require("@dottoxd/statusmonitor-process")
 const Monitor = new StatusMonitor.Process("Your application name", "DOCKER", "US", 3000);
+const ProcessMonitor = Monitor.statsFetcher();
+```
+
+Running with an existing fastify instance
+```
+const StatusMonitor = require("@dottoxd/statusmonitor-process")
+const Monitor = new StatusMonitor.Process("Your application name", "DOCKER", "US", 3000, fastify);
 const ProcessMonitor = Monitor.statsFetcher();
 ```
