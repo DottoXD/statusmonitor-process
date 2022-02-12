@@ -1,6 +1,6 @@
 const si = require("systeminformation");
 const pidusage = require("pidusage");
-const fastify = require('fastify')({ logger: false })
+let fastify = require('fastify')({ logger: false })
 
 /**
  * @class StatusMonitorProcess
@@ -11,12 +11,14 @@ class StatusMonitor {
    * @param {string} type - your service type"
    * @param {string} location - your service location"
    * @param {number} port - webservers port"
+   * @param {object} fastify - fastify object"
    */
-  constructor(name, type, location, port) {
+  constructor(name, type, location, port, fastifyObject) {
       this.name = name;
       this.type = type;
       this.location = location;
       this.port = port;
+      this.fastifyObject = fastifyObject;
   }
     
   async statsFetcher() {
@@ -27,7 +29,9 @@ class StatusMonitor {
       let netInSec;
       let netOutSec;
       
-      fastify.get('/', async (request, reply) => {
+      if(this.fastifyObject) fastify = this.fastifyObject;
+      
+      fastify.get('/statusmonitor', async (request, reply) => {
           function convertSeconds(seconds) {
               seconds = Number(seconds);
               var d = Math.floor(seconds / (3600 * 24));
@@ -81,9 +85,11 @@ class StatusMonitor {
           })
       })
       
-      fastify.listen(this.port, "0.0.0.0", (err, address) => {
-          if (err) throw err
-      })
+      if(!this.fastifyObject || this.fastifyObject === undefined) {
+          fastify.listen(this.port, "0.0.0.0", (err, address) => {
+          	if (err) throw err
+          })
+      }
   }
 }
 
