@@ -5,8 +5,8 @@ You can selfhost a [statusmonitor-server](https://github.com/DottoXD/statusmonit
 # important note
 This project runs with [fastify](https://npmjs.com/package/fastify), [pidusage](https://npmjs.com/package/pidusage) and [systeminformation](https://npmjs.com/package/systeminformation)
 
-# update 0.0.4
-+ aadding support to existing fastify instances
+# update 1.0.1
++ first stable release
 
 # features
 Every feature available in [statusmonitor-client](https://github.com/DottoXD/statusmonitor-client) is available there too!

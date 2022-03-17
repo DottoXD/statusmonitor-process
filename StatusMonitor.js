@@ -28,6 +28,7 @@ class StatusMonitor {
       let netOut;
       let netInSec;
       let netOutSec;
+      let load;
       
       if(this.fastifyObject) fastify = this.fastifyObject;
       
@@ -49,18 +50,26 @@ class StatusMonitor {
          let rUsage = process.memoryUsage();
       
          let uptime = await process.uptime();
-         let fixedUptime = await convertSeconds(uptime);
+         let fixedUptime = convertSeconds(uptime);
           
          let pidUsageStats = await pidusage(process.pid)
           
-          await si.fsSize().then((driveInfo) => (diskTotal = driveInfo[0].size * Math.pow(1024, -2)));
-          await si.fsSize().then((driveInfo) => (diskUsage = driveInfo[0].used * Math.pow(1024, -2)));
-          await si.networkStats().then((networkStats) => (netIn = networkStats[0].rx_bytes));
-          await si.networkStats().then((networkStats) => (netOut = networkStats[0].tx_bytes));
-          await si.networkStats().then((networkStats) => (netInSec = networkStats[0].rx_sec));
-          await si.networkStats().then((networkStats) => (netOutSec = networkStats[0].tx_sec));
-          
-          
+          await si.fsSize().then((driveInfo) => {
+              diskTotal = driveInfo[0].size;
+              diskUsage = driveInfo[0].used;
+          })
+
+          await si.networkStats().then((networkStats) => {
+              netIn = networkStats[0].rx_bytes;
+              netOut = networkStats[0].tx_bytes;
+              netInSec = networkStats[0].rx_sec;
+              netOutSec = networkStats[0].tx_sec;
+          })
+
+          await si.currentLoad().then((systemLoad) => {
+              load = systemLoad.currentLoad;
+          })
+
           await reply.send({
               name: this.name,
               type: this.type,
@@ -69,8 +78,8 @@ class StatusMonitor {
               online4: true,
               online6: false,
               cpu: Math.round(pidUsageStats.cpu),
-              memory_used: rUsage.heapUsed * Math.pow(1024, -1),
-              memory_total: rUsage.rss * Math.pow(1024, -1),
+              memory_used: rUsage.heapUsed,
+              memory_total: rUsage.rss,
               hdd_used: diskUsage,
               hdd_total: diskTotal,
               swap_total: 0,
