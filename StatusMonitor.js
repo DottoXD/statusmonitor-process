@@ -29,6 +29,7 @@ class StatusMonitor {
       let netInSec;
       let netOutSec;
       let load;
+      let ping;
       
       if(this.fastifyObject) fastify = this.fastifyObject;
       
@@ -70,6 +71,8 @@ class StatusMonitor {
               load = systemLoad.currentLoad;
           })
 
+          await si.inetLatency().then((Data) => ping = Data);
+
           await reply.send({
               name: this.name,
               type: this.type,
@@ -90,7 +93,8 @@ class StatusMonitor {
               network_tx_sec: netOutSec,
               uptime: fixedUptime,
               custom: "",
-              load: 0
+              load: 0,
+              ping: Math.round(ping),
           })
       })
       
