@@ -9,6 +9,7 @@ This project runs with [fastify](https://npmjs.com/package/fastify), [pidusage](
 + first stable release
 + (1.0.3) ping support
 + (1.0.3) bug fixes
++ typescript support
 
 # features
 Every feature available in [statusmonitor-client](https://github.com/DottoXD/statusmonitor-client) is available there too!
